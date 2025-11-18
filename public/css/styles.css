@@ -4,3 +4,71 @@
 *:after {
   box-sizing: border-box;
 }
+
+html {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw; 
+  background-image: url("../images/site/checkerboard.jpg");
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  width: 90%;
+  background-color: white;
+  padding: 20px;
+  border: 5px solid #01b0d3;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  
+}
+
+#top-header a{
+  text-decoration: none;
+  color: black;
+  font-size: 1.3rem;
+
+}
+
+nav {
+  background-color: black;
+  
+  padding: 10px 0px;
+  color: white;
+}
+
+nav ul{
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+.hero-wrapper{
+  background-image: url("../images/vehicles/delorean-tn.jpg");
+  background-size:contain;
+  background-repeat: no-repeat;
+  width: 80%;
+  height: 500px;
+  align-items: center;
+}
+
+.hero-description{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-content: start;
+  background-color: white;
+  color: #01b0d3;
+}
