@@ -59,3 +59,16 @@ Util.buildClassificationGrid = async function(data){
   }
   return grid
 }
+
+/* ************************************
+ * Build the Details view HTML
+ * ********************************** */
+
+Util.buildDetialsGrid = async function(data){
+  let grid
+  if(data.length > 0) {    
+    grid += '<ul id="inv-details-display">'
+    grid += '<h2>'+ data.inv_year +' '+ data.inv_make + ' ' + data.inv_model + '</h2>'
+  }
+  return grid
+}
