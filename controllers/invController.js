@@ -19,20 +19,20 @@ invCont.buildByClassificationId = async function (req, res, next) {
     })
 }
 
-module.exports = invCont
 
-const invDetails = {}
 
-invDetails.buildByInvId = async function (req, res, next){
-    const inventory_id = req.params.invId
-    const data = await invModel.getDetailsByInventoryId(inventory_id)
+invCont.buildByInvId = async function (req, res, next){
+    const invId = req.params.invId
+    const data = await invModel.getDetailsByInventoryId(invId)
     const grid = await utilities.buildDetailsGrid(data)
     let nav = await utilities.getNav()
-    const vehicleName = data.inv_model
     const vehicleYear = data.inv_year
+    const vehicleModel = data.inv_model
     const vehicleMake = data.inv_make
-    res.render("./inventory/detail", {
-        title: vehicleYear + " " + vehicleMake + " " + vehicleName,
+
+    console.log(grid)
+    res.render(`inventory/detail`, {
+        title: vehicleYear + " " +vehicleMake + " " + vehicleModel , 
         nav, 
         grid,
         item: data
@@ -40,4 +40,4 @@ invDetails.buildByInvId = async function (req, res, next){
 
 } 
 
-module.exports = invDetails
+module.exports = invCont
