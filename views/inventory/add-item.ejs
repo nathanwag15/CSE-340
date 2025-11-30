@@ -3,6 +3,18 @@
   <!-- Title -->
   <h1 class="form-title">Add Inventory Item</h1>
 
+  <% if (errors) { %>
+    <ul class="notice">
+  <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+  <%  }) %>
+    </ul>
+  <% } %>
+
+  <% if (message && message.length) { %>
+  <div class="flash-message"><%= message %></div>
+  <% } %>
+
   <!-- Classification -->
   <label for="classification_id">Classification</label>
   <select name="classification_id" id="classification_id" required>
@@ -16,7 +28,6 @@
 
   </select>
 
-  <small class="field-rule">Field name: <strong>classification_id</strong></small>
 
   <!-- Make -->
   <label for="make">Make (required)</label>

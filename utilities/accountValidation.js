@@ -1,5 +1,6 @@
 const utilities = require(".")
 const accountModel = require("../models/account-model")
+const invModel = require("../models/inventory-model")
 
   const { body, validationResult } = require("express-validator")
   const validate = {}
@@ -117,5 +118,102 @@ validate.checkLoginData = async (req, res, next) => {
         return
     }
     next()
+}
+
+validate.inventoryRules = () => {
+        return [
+    // classification_id is required
+    body("classification_id")
+        .trim()
+        .notEmpty()
+        .withMessage("Please select a classification."),
+
+    // inv_make is required, min 3 chars
+    body("inv_make")
+        .trim()
+        .escape()
+        .notEmpty()
+        .isLength({ min: 3 })
+        .withMessage("Please provide a make of at least 3 characters."),
+
+    // inv_model is required, min 3 chars
+    body("inv_model")
+        .trim()
+        .escape()
+        .notEmpty()
+        .isLength({ min: 3 })
+        .withMessage("Please provide a model of at least 3 characters."),
+
+    // inv_description is required
+    body("inv_description")
+        .trim()
+        .escape()
+        .notEmpty()
+        .withMessage("Please provide a description."),
+
+    // inv_image: optional, but if present must be valid URL or default path
+    body("inv_image")
+        .trim()
+        .notEmpty()
+        .withMessage("Please provide an image URL."),
+
+    // inv_thumbnail: optional, but if present must be valid URL or default path
+    body("inv_thumbnail")
+        .trim()
+        .notEmpty()
+        .withMessage("Please provide a thumbnail URL."),
+
+    // inv_price: required, must be numeric
+    body("inv_price")
+        .trim()
+        .notEmpty()
+        .isFloat({ min: 0 })
+        .withMessage("Please provide a valid price."),
+
+    // inv_year: required, must be a 4-digit number
+    body("inv_year")
+        .trim()
+        .notEmpty()
+        .isInt({ min: 1900, max: 2099 })
+        .withMessage("Please provide a valid 4-digit year."),
+
+    // inv_miles: required, digits only
+    body("inv_miles")
+        .trim()
+        .notEmpty()
+        .isInt({ min: 0 })
+        .withMessage("Please provide a valid mileage."),
+
+    // inv_color: required
+    body("inv_color")
+        .trim()
+        .escape()
+        .notEmpty()
+        .withMessage("Please provide a color."),
+    ]
+
+}
+
+validate.checkInventoryData = async (req, res, next) => {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav()
+    const result = await invModel.getClassifications()
+        
+    const classifications = result.rows
+
+    // Re-render the add-item form with errors and previous data
+    return res.render("inventory/add-item", {
+      title: "Add Inventory Item",
+      nav,
+      classifications, // or fetch again if not stored
+      errors: validationResult(req), // array of validation errors
+      data: req.body,         // so the form keeps user input
+      message: req.flash("message")
+    })
+  }
+
+  next()
 }
 module.exports = validate

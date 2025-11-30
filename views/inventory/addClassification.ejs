@@ -1,0 +1,25 @@
+<div class="container">
+  <h1><%= title %></h1>
+
+  <!-- Display flash messages -->
+  <% if (message && message.length) { %>
+    <div class="flash-message"><%= message %></div>
+  <% } %>
+
+  <% if (success && success.length) { %>
+    <div class="flash-success"><%= success %></div>
+  <% } %>
+
+  <form action="/inv/addClassification" method="POST" class="add-classification-form">
+    <label for="classification_name">Classification Name</label>
+    <input
+      type="text"
+      name="classification_name"
+      id="classification_name"
+      placeholder="Enter classification"
+      required
+      value="<%= data ? data.classification_name : '' %>"
+    />
+    <button type="submit">Add Classification</button>
+  </form>
+</div>
