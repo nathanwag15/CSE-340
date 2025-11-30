@@ -1,15 +1,21 @@
-<form action="/inventory/add-item-submit" method="POST" class="inventory-form">
+<form action="/inv/addItem" method="POST" class="inventory-form">
 
   <!-- Title -->
   <h1 class="form-title">Add Inventory Item</h1>
 
   <!-- Classification -->
-  <label for="classification">Classification (required)</label>
-  <select name="classification_id" id="classification" required>
-    <option value="">Select a Classification</option>
-    <!-- Placeholder to prevent undefined errors until controller is built -->
-    <option value="1">Example Classification</option>
+  <label for="classification_id">Classification</label>
+  <select name="classification_id" id="classification_id" required>
+    <option value="">-- Select Classification --</option>
+
+    <% classifications.forEach(function(c) { %>
+      <option value="<%= c.classification_id %>">
+        <%= c.classification_name %>
+      </option>
+    <% }) %>
+
   </select>
+
   <small class="field-rule">Field name: <strong>classification_id</strong></small>
 
   <!-- Make -->
@@ -29,15 +35,13 @@
 
   <!-- Image (default visible rule) -->
   <label for="image">Image URL (optional)</label>
-  <input type="text" id="image-input" placeholder="Upload coming later">
+  <input type="text" id="image-input" placeholder="/images/vehicles/no-image.png">
   <input type="hidden" name="inv_image" value="/images/vehicles/no-image.png">
-  <small class="field-rule">Default value used: <strong>/images/vehicles/no-image.png</strong></small>
 
   <!-- Thumbnail (default visible rule) -->
   <label for="thumbnail">Thumbnail URL (optional)</label>
-  <input type="text" id="thumbnail-input" placeholder="Upload coming later">
+  <input type="text" id="thumbnail-input" placeholder="/images/vehicles/no-image.png">
   <input type="hidden" name="inv_thumbnail" value="/images/vehicles/no-image.png">
-  <small class="field-rule">Default value used: <strong>/images/vehicles/no-image.png</strong></small>
 
   <!-- Price -->
   <label for="price">Price (required)</label>

@@ -41,13 +41,78 @@ invCont.buildByInvId = async function (req, res, next){
 } 
 
 
+/* ****************************************
+*  Render Add Inventory View
+* *************************************** */
+invCont.renderAddItemView = async function (req, res, next) {
+  try {
+    const nav = await utilities.getNav()
+    const result = await invModel.getClassifications()
+    const classifications = result.rows
 
-invCont.addItem = async function (req, res, next) {
+    res.render("inventory/add-item", { 
+      title: "Add Inventory Item",
+      nav,
+      classifications,
+      message: req.flash("message"), // for optional flash display in view
+      data: null
+    })
+  } catch (err) {
+    next(err)
+  }
 }
 
-invCont.renderAddItemView = async function (req, res, next) {    
-    classifications = invModel.getClassifications
-    console.log (classifications)
+/* ****************************************
+*  Add Inventory Item
+* *************************************** */
+invCont.addInventoryItem = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav()
+
+    const {
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color
+    } = req.body
+
+    // Call model to insert new inventory item
+    const regResult = await invModel.addInventoryItem(
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color
+    )
+
+    // ✅ Proper success check (make sure rows exist)
+    if (regResult && regResult.rows && regResult.rows[0]) {
+      req.flash("message", `Inventory item added successfully: ${inv_year} ${inv_make} ${inv_model}`)
+      return res.redirect("/inv/addItem") // redirect to avoid duplicate submission
+    } else {
+      req.flash("message", "Sorry, adding the inventory item failed.")
+      res.status(501).render("inv/addItem", {
+        title: "Add Inventory Item",
+        nav,
+        message: req.flash("message"),
+        data: req.body
+      })
+    }
+  } catch (err) {
+    next(err) // ✅ lets middleware handle errors
+  }
 }
+
 
 module.exports = invCont
