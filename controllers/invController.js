@@ -40,4 +40,14 @@ invCont.buildByInvId = async function (req, res, next){
 
 } 
 
+
+
+invCont.addItem = async function (req, res, next) {
+}
+
+invCont.renderAddItemView = async function (req, res, next) {    
+    classifications = invModel.getClassifications
+    console.log (classifications)
+}
+
 module.exports = invCont

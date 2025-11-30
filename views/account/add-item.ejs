@@ -1,0 +1,65 @@
+<form action="/inventory/add-item-submit" method="POST" class="inventory-form">
+
+  <!-- Title -->
+  <h1 class="form-title">Add Inventory Item</h1>
+
+  <!-- Classification -->
+  <label for="classification">Classification (required)</label>
+  <select name="classification_id" id="classification" required>
+    <option value="">Select a Classification</option>
+    <!-- Placeholder to prevent undefined errors until controller is built -->
+    <option value="1">Example Classification</option>
+  </select>
+  <small class="field-rule">Field name: <strong>classification_id</strong></small>
+
+  <!-- Make -->
+  <label for="make">Make (required)</label>
+  <input type="text" name="inv_make" id="make" placeholder="e.g., Toyota" required>
+  <small class="field-rule">Must contain <strong>at least 3 characters</strong>.</small>
+
+  <!-- Model -->
+  <label for="model">Model (required)</label>
+  <input type="text" name="inv_model" id="model" placeholder="e.g., Corolla" required>
+  <small class="field-rule">Must contain <strong>at least 3 characters</strong>.</small>
+
+  <!-- Description -->
+  <label for="description">Description (optional)</label>
+  <textarea name="inv_description" id="description" placeholder="Vehicle details..."></textarea>
+  <small class="field-rule">No validation rules required yet.</small>
+
+  <!-- Image (default visible rule) -->
+  <label for="image">Image URL (optional)</label>
+  <input type="text" id="image-input" placeholder="Upload coming later">
+  <input type="hidden" name="inv_image" value="/images/vehicles/no-image.png">
+  <small class="field-rule">Default value used: <strong>/images/vehicles/no-image.png</strong></small>
+
+  <!-- Thumbnail (default visible rule) -->
+  <label for="thumbnail">Thumbnail URL (optional)</label>
+  <input type="text" id="thumbnail-input" placeholder="Upload coming later">
+  <input type="hidden" name="inv_thumbnail" value="/images/vehicles/no-image.png">
+  <small class="field-rule">Default value used: <strong>/images/vehicles/no-image.png</strong></small>
+
+  <!-- Price -->
+  <label for="price">Price (required)</label>
+  <input type="number" name="inv_price" id="price" placeholder="e.g., 19999" required>
+  <small class="field-rule">Enter an <strong>integer or decimal number</strong>.</small>
+
+  <!-- Year -->
+  <label for="year">Year (required)</label>
+  <input type="text" name="inv_year" id="year" placeholder="e.g., 2022" required>
+  <small class="field-rule">Must be a <strong>4-digit year</strong>.</small>
+
+  <!-- Miles -->
+  <label for="miles">Miles (required)</label>
+  <input type="number" name="inv_miles" id="miles" placeholder="e.g., 85000" required>
+  <small class="field-rule">Digits only — <strong>no letters or symbols</strong>.</small>
+
+  <!-- Color -->
+  <label for="color">Color (required)</label>
+  <input type="text" name="inv_color" id="color" placeholder="e.g., Red" required>
+  <small class="field-rule">No validation rules required yet.</small>
+
+  <!-- Submit -->
+  <button type="submit" class="submit-btn">Add Inventory Item</button>
+
+</form>

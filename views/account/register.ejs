@@ -1,0 +1,55 @@
+<div class="container">
+
+  <h1><%= title %></h1>
+
+
+  <form action="/account/register" method="POST" class="registration-form">
+
+    <!-- First Name -->
+    <label for="first_name">First Name</label>
+    <input 
+      type="text" 
+      name="account_firstname" 
+      id="account_firstname" 
+      placeholder="Enter First Name" 
+      required 
+    />
+
+    <!-- Last Name -->
+    <label for="last_name">Last Name</label>
+    <input 
+      type="text" 
+      name="account_lastname" 
+      id="account_lastname" 
+      placeholder="Enter Last Name" 
+      required
+    />
+
+    <!-- Email -->
+    <label for="email">Email Address</label>
+    <input 
+      type="email" 
+      name="account_email" 
+      id="account_email" 
+      placeholder="you@example.com" 
+      required
+    />
+
+    <!-- Password -->
+    <label for="password">Password</label>
+    <input 
+      name="account_password" 
+      id="account_password" 
+      placeholder="Enter your password" 
+      required
+    />
+    <small class="password-rules">
+      Password must be at least 12 characters, contain at least 1 capital letter, 1 number, and 1 special character.
+    </small>
+
+    <!-- Submit Button -->
+    <button type="submit">Register</button>
+
+  </form>
+
+</div>

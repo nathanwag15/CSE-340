@@ -45,9 +45,8 @@ Util.buildClassificationGrid = async function(data){
       grid += '<hr />'
       grid += '<h2>'
       grid += '<a href="/inv/detail/' + vehicle.inv_id + '" title="View ' 
-+ vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
-+ vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
-
+      + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
+      + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
       grid += '</h2>'
       grid += '<span>$' 
       + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
@@ -86,5 +85,12 @@ Util.buildDetailsGrid = async function(data){
   grid += '</div>'
   return grid
 }
+
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for 
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
 module.exports = Util
