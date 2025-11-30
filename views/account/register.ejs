@@ -2,17 +2,24 @@
 
   <h1><%= title %></h1>
 
+  <% if (errors) { %>
+    <ul class="notice">
+  <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+  <%  }) %>
+    </ul>
+  <% } %>
 
   <form action="/account/register" method="POST" class="registration-form">
 
     <!-- First Name -->
     <label for="first_name">First Name</label>
     <input 
-      type="text" 
-      name="account_firstname" 
-      id="accountFirstname" 
-      placeholder="Enter First Name" 
-      required 
+        type="text" 
+        name="account_firstname" 
+        id="accountFirstname" 
+        required 
+        value="<%= locals.account_firstname %>"
     />
 
     <!-- Last Name -->
@@ -23,6 +30,7 @@
       id="accountLastname" 
       placeholder="Enter Last Name" 
       required
+      value="<%= locals.account_lastname %>"
     />
 
     <!-- Email -->
@@ -33,6 +41,7 @@
       id="accountEmail" 
       placeholder="you@example.com" 
       required
+      value="<%= locals.account_email %>"
     />
 
     <!-- Password -->
