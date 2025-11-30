@@ -335,3 +335,11 @@ nav ul{
   font-size: 0.85rem;
   color: #6b7280;
 }
+
+input:required:invalid, input:focus:invalid {
+ background-color: lightpink;
+}
+
+input:required:valid {
+  background-color: lightskyblue;
+}
