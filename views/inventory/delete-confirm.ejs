@@ -1,0 +1,72 @@
+<form action="/inv/delete/<%= inv_id %>" method="post" id="updateForm">
+
+  <!-- Title -->
+  <h1 class="form-title"><%=inv_year%> <%=inv_make%> <%=inv_model%></h1>
+
+  <% if (errors) { %>
+    <ul class="notice">
+  <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+  <%  }) %>
+    </ul>
+  <% } %>
+
+  <% if (message && message.length) { %>
+  <div class="flash-message"><%= message %></div>
+  <% } %>
+
+<!-- Make -->
+<label for="make">Make (required)</label>
+<input 
+  type="text" 
+  name="inv_make" 
+  id="make" 
+  placeholder="e.g., Toyota" 
+  value="<%= inv_make %>" 
+  readonly
+>
+
+
+<!-- Model -->
+<label for="model">Model (required)</label>
+<input 
+  type="text" 
+  name="inv_model" 
+  id="model" 
+  placeholder="e.g., Corolla" 
+  value="<%= inv_model %>" 
+  readonly
+>
+
+<!-- Price -->
+<label for="price">Price (required)</label>
+<input 
+  type="number" 
+  name="inv_price" 
+  id="price" 
+  placeholder="e.g., 19999" 
+  value="<%= inv_price %>" 
+  readonly
+>
+
+
+<!-- Year -->
+<label for="year">Year (required)</label>
+<input 
+  type="text" 
+  name="inv_year" 
+  id="year" 
+  placeholder="e.g., 2022" 
+  value="<%= inv_year %>" 
+  readonly
+>
+
+<!-- Submit -->
+ <p>Confirm Deletion - The delete is permanent.</p>
+<button type="submit" >Delete Vehicle</button>
+
+<input type="hidden" name="inv_id"
+<% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+<% } %>>
+
+</form>

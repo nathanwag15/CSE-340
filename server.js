@@ -17,7 +17,7 @@ const pool = require('./database/')
 const accountRoute = require("./routes/accountRoute")
 const utilities = require("./utilities/")
 const bodyParser = require("body-parser")
-
+const cookieParser = require("cookie-parser")
 
 
 /* ***********************
@@ -42,6 +42,9 @@ app.use(function(req, res, next){
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
+// Cookie Parser
+app.use(cookieParser())
+app.use(utilities.checkJWTToken)
 
 
 /* ***********************

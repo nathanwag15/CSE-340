@@ -103,21 +103,19 @@ validate.loginRules = () => {
 }
 
 validate.checkLoginData = async (req, res, next) => {
-    const {account_email, account_password} = req.body
-    let errors = []
-    errors = validationResult(req)
-    if (!errors.isEmpty()) {
-        let nav = await utilities.getNav()
-        res.render("account/register", {
-        errors,
-        title: ":Login",
-        nav,
-        account_email,
-        account_password,
-        })
-        return
-    }
-    next()
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    return res.render("account/login", {
+      errors,
+      title: "Login",
+      nav,
+      account_email: req.body.account_email,
+      message: req.flash("notice") || null,
+      success: null
+    })
+  }
+  next()
 }
 
 validate.inventoryRules = () => {
@@ -196,6 +194,35 @@ validate.inventoryRules = () => {
 
 validate.checkInventoryData = async (req, res, next) => {
   const errors = validationResult(req)
+  const inv_id = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav()
+    const result = await invModel.getClassifications()
+        
+    const classifications = result.rows
+
+    // Re-render the add-item form with errors and previous data
+    return res.render("inventory/edit-inventory", {
+      title: "Edit Item",
+      nav,
+      classifications, // or fetch again if not stored
+      errors: validationResult(req), // array of validation errors
+      data: req.body,         // so the form keeps user input
+      message: req.flash("message"),
+      inv_id
+    })
+  }
+
+  next()
+}
+
+/***********      
+ * Errors will be directed back to the edit view
+ ***********/
+
+validate.checkUpdateData = async (req, res, next) => {
+  const errors = validationResult(req)
 
   if (!errors.isEmpty()) {
     const nav = await utilities.getNav()
@@ -216,4 +243,5 @@ validate.checkInventoryData = async (req, res, next) => {
 
   next()
 }
+
 module.exports = validate

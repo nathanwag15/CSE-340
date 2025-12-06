@@ -17,6 +17,16 @@ router.post(
   regValidate.checkInventoryData,
   utilities.handleErrors(invController.addInventoryItem)
 )
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+router.get("/edit/:inv_id", utilities.handleErrors(invController.editInventoryView))
+router.post("/update/",
+  regValidate.inventoryRules(),
+  regValidate.checkUpdateData, 
+  utilities.handleErrors(invController.updateInventory))
+router.get("/delete/:inv_id",
+  utilities.handleErrors(invController.renderDeleteConfirmation)
+)
+router.post("/delete/:inv_id", utilities.handleErrors(invController.deleteInventory))
 
 // Add classification
 router.get("/addClassification", invController.renderAddClassificationView)

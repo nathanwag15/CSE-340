@@ -1,0 +1,144 @@
+<form action="/inv/update" method="post" id="updateForm">
+
+  <!-- Title -->
+  <h1 class="form-title"><%=inv_year%> <%=inv_make%> <%=inv_model%></h1>
+
+  <% if (errors) { %>
+    <ul class="notice">
+  <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+  <%  }) %>
+    </ul>
+  <% } %>
+
+  <% if (message && message.length) { %>
+  <div class="flash-message"><%= message %></div>
+  <% } %>
+
+  <!-- Classification -->
+  <label for="classification_id">Classification</label>
+<select name="classification_id" id="classification_id" required>
+  <% classificationSelect.forEach(function(c) { %>
+    <option value="<%= c.classification_id %>" 
+      <%= c.classification_id === classification_id ? "selected" : "" %>>
+      <%= c.classification_name %>
+    </option>
+  <% }) %>
+</select>
+
+<!-- Make -->
+<label for="make">Make (required)</label>
+<input 
+  type="text" 
+  name="inv_make" 
+  id="make" 
+  placeholder="e.g., Toyota" 
+  value="<%= inv_make %>" 
+  required
+>
+<small class="field-rule">Must contain <strong>at least 3 characters</strong>.</small>
+
+<!-- Model -->
+<label for="model">Model (required)</label>
+<input 
+  type="text" 
+  name="inv_model" 
+  id="model" 
+  placeholder="e.g., Corolla" 
+  value="<%= inv_model %>" 
+  required
+>
+<small class="field-rule">Must contain <strong>at least 3 characters</strong>.</small>
+
+<!-- Description -->
+<label for="description">Description (optional)</label>
+<textarea 
+  name="inv_description" 
+  id="description" 
+  placeholder="Vehicle details..."
+><%= inv_description %></textarea>
+<small class="field-rule">No validation rules required yet.</small>
+
+<!-- Image URL -->
+<label for="image">Image URL (optional)</label>
+<input 
+  type="text" 
+  id="image-input" 
+  value="<%= inv_image %>"
+>
+<input 
+  type="hidden" 
+  name="inv_image" 
+  value="<%= inv_image %>"
+>
+
+<!-- Thumbnail URL -->
+<label for="thumbnail">Thumbnail URL (optional)</label>
+<input 
+  type="text" 
+  id="thumbnail-input" 
+  value="<%= inv_thumbnail %>"
+>
+<input 
+  type="hidden" 
+  name="inv_thumbnail" 
+  value="<%= inv_thumbnail %>"
+>
+
+<!-- Price -->
+<label for="price">Price (required)</label>
+<input 
+  type="number" 
+  name="inv_price" 
+  id="price" 
+  placeholder="e.g., 19999" 
+  value="<%= inv_price %>" 
+  required
+>
+<small class="field-rule">Enter an <strong>integer or decimal number</strong>.</small>
+
+<!-- Year -->
+<label for="year">Year (required)</label>
+<input 
+  type="text" 
+  name="inv_year" 
+  id="year" 
+  placeholder="e.g., 2022" 
+  value="<%= inv_year %>" 
+  required
+>
+<small class="field-rule">Must be a <strong>4-digit year</strong>.</small>
+
+<!-- Miles -->
+<label for="miles">Miles (required)</label>
+<input 
+  type="number" 
+  name="inv_miles" 
+  id="miles" 
+  placeholder="e.g., 85000" 
+  value="<%= inv_miles %>" 
+  required
+>
+<small class="field-rule">Digits only — <strong>no letters or symbols</strong>.</small>
+
+<!-- Color -->
+<label for="color">Color (required)</label>
+<input 
+  type="text" 
+  name="inv_color" 
+  id="color" 
+  placeholder="e.g., Red" 
+  value="<%= inv_color %>" 
+  required
+>
+
+  <!-- Submit -->
+  <button type="submit" disabled>Update Vehicle</button>
+
+  <input type="hidden" name="inv_id"
+    <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+    <% } %>>
+
+</form>
+
+<script src="../../js/inv-update.js"></script>
