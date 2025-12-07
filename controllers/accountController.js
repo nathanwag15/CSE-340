@@ -33,13 +33,17 @@ async function buildRegister(req, res, next) {
 * *************************************** */
 async function buildManagement(req, res, next) {
   let nav = await utilities.getNav()
+
   res.render("account/", {
     title: "Management",
     nav,
     errors: null,
-    success: null
+    success: null,
+    message: null,
+    accountData: res.locals.accountData // ✅ pass JWT data to view
   })
 }
+
 
 /* ****************************************
 *  Process Registration
@@ -140,4 +144,20 @@ async function accountLogin(req, res) {
   }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement } 
+/****************************************
+ *  Account Logout
+ ***************************************/
+async function accountLogout(req, res) {
+  res.clearCookie("jwt")
+  req.flash("success", "You have been logged out.")
+  return res.redirect("/")
+}
+
+/****************************************
+ *  Account Update
+ ***************************************/
+async function accountUpdate(req,res) {
+  
+}
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, accountLogout, accountUpdate } 

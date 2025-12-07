@@ -18,6 +18,12 @@ router.post(
   utilities.handleErrors(accountController.accountLogin)
 )
 
+// Process the logout
+router.get("/logout", accountController.accountLogout)
+
+// update the user information
+router.get("/update/:account_id", accountController.accountUpdate)
+
 // Route to build registration
 router.get("/register", utilities.handleErrors(accountController.buildRegister))
 
