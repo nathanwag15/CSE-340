@@ -130,4 +130,47 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
+
+function checkEmployee(req, res, next) {
+  const token = req.cookies.jwt
+  let nav = getNav()
+
+  if (!token) {
+    req.flash("notice", "Please log in with an Employee or Admin account.")
+    return res.status(401).render("account/login", {
+      title: "Login",
+      errors: null,
+      nav: nav,
+      message: req.flash("notice")
+    })
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+
+    const role = decoded.account_type
+
+    if (role === "Employee" || role === "Admin") {
+      res.locals.accountData = decoded
+      return next()
+    } else {
+      req.flash("notice", "You are not authorized to access that area.")
+      return res.status(403).render("account/login", {
+        title: "Login",
+        errors: null,
+        nav: nav,
+        message: req.flash("notice")
+      })
+    }
+  } catch (err) {
+    req.flash("notice", "Your session has expired. Please log in again.")
+    return res.status(403).render("account/login", {
+      title: "Login",
+      errors: null,
+      nav: nav,
+      message: req.flash("notice")
+    })
+  }
+}
+
 module.exports = Util

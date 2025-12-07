@@ -45,11 +45,6 @@ app.use(function(req, res, next){
 // Cookie Parser
 app.use(cookieParser())
 app.use(utilities.checkJWTToken)
-app.use((req, res, next) => {
-  res.locals.accountData = req.session.accountData || null
-  next()
-})
-
 
 /* ***********************
  * View Engine and Templates
