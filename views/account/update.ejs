@@ -1,0 +1,104 @@
+<div class="container">
+
+  <!-- Page title -->
+  <h1><%= title %></h1>
+
+  <!-- Flash message -->
+  <% if (message && message.length) { %>
+    <div class="flash-message"><%= message %></div>
+  <% } %>
+
+  <% if (success && success.length) { %>
+    <div class="flash-success"><%= success %></div>
+  <% } %>
+
+  <!-- Validation errors -->
+  <% if (errors) { %>
+    <ul class="notice">
+      <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <!-- ================= Account Update Form ================= -->
+  <form action="/account/update" method="POST" class="form-account-update">
+    <fieldset>
+      <legend>Account Update</legend>
+
+      <!-- Hidden field for account ID -->
+      <input type="hidden" name="account_id" value="<%= accountData.account_id %>">
+
+      <!-- First Name -->
+      <div class="form-group">
+        <label for="account_firstname">First Name</label>
+        <input 
+          type="text" 
+          id="account_firstname" 
+          name="account_firstname" 
+          required 
+          value="<%= typeof body !== 'undefined' && body.account_firstname ? body.account_firstname : accountData.account_firstname %>">
+      </div>
+
+      <!-- Last Name -->
+      <div class="form-group">
+        <label for="account_lastname">Last Name</label>
+        <input 
+          type="text" 
+          id="account_lastname" 
+          name="account_lastname" 
+          required 
+          value="<%= typeof body !== 'undefined' && body.account_lastname ? body.account_lastname : accountData.account_lastname %>">
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="account_email">Email Address</label>
+        <input 
+          type="email" 
+          id="account_email" 
+          name="account_email" 
+          required
+          value="<%= typeof body !== 'undefined' && body.account_email ? body.account_email : accountData.account_email %>">
+      </div>
+
+      <!-- Submit -->
+      <div class="form-group">
+        <input type="submit" value="Update Account">
+      </div>
+
+    </fieldset>
+  </form>
+
+  <hr>
+
+  <!-- ================= Change Password Form ================= -->
+  <form action="/account/update-password" method="POST" class="form-change-password">
+    <fieldset>
+      <legend>Change Password</legend>
+
+      <!-- Hidden field for account ID -->
+      <input type="hidden" name="account_id" value="<%= accountData.account_id %>">
+
+      <!-- New Password -->
+      <div class="form-group">
+        <label for="account_password">New Password</label>
+        <input 
+          type="password" 
+          id="account_password" 
+          name="account_password" 
+          required 
+          pattern="^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{12,}$"
+          title="Password must be at least 12 characters long and contain at least 1 capital letter and 1 number">
+        <small>Enter a new password to change your current password. Must be at least 12 characters and contain at least 1 number and 1 capital letter.</small>
+      </div>
+
+      <!-- Submit -->
+      <div class="form-group">
+        <input type="submit" value="Change Password">
+      </div>
+
+    </fieldset>
+  </form>
+
+</div>

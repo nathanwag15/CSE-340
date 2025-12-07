@@ -22,7 +22,15 @@ router.post(
 router.get("/logout", accountController.accountLogout)
 
 // update the user information
-router.get("/update/:account_id", accountController.accountUpdate)
+router.get("/update/:account_id", accountController.buildUpdateView)
+// Update account info
+router.post("/update/",
+  accountController.updateAccountInfo)
+// Update password
+router.post(
+  "/update-password",
+  accountController.updateAccountPassword
+)
 
 // Route to build registration
 router.get("/register", utilities.handleErrors(accountController.buildRegister))

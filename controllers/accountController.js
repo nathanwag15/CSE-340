@@ -154,10 +154,114 @@ async function accountLogout(req, res) {
 }
 
 /****************************************
- *  Account Update
- ***************************************/
-async function accountUpdate(req,res) {
+ *  Deliver account update view
+ ****************************************/
+async function buildUpdateView(req, res, next) {
+  const nav = await utilities.getNav()
   
+  res.render("account/update", {
+    title: "Update Account",
+    nav,
+    accountData: res.locals.accountData,
+    errors: null,
+    message: req.flash("notice"),
+    success: req.flash("success")
+  })
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, accountLogout, accountUpdate } 
+/****************************************
+ *  Update account information
+ ****************************************/
+async function updateAccountInfo(req, res, next) {
+  const nav = await utilities.getNav()
+  // const errors = validationResult(req)
+  const { account_id, account_firstname, account_lastname, account_email } = req.body
+
+  try {
+    await accountModel.updateAccount(account_id, account_firstname, account_lastname, account_email)
+    req.flash("success", "Account information updated successfully.")
+    
+    // Update session or JWT data if needed
+    res.locals.accountData.account_firstname = account_firstname
+    res.locals.accountData.account_lastname = account_lastname
+    res.locals.accountData.account_email = account_email
+    
+    res.locals.accountData.account_firstname = account_firstname
+    res.locals.accountData.account_lastname = account_lastname
+    res.locals.accountData.account_email = account_email
+
+    // If using sessions:
+    req.session.accountData = res.locals.accountData
+
+    // If using JWT:
+    const accessToken = jwt.sign(
+      res.locals.accountData,
+      process.env.ACCESS_TOKEN_SECRET
+    )
+
+    if (process.env.NODE_ENV === "development") {
+      res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+    } else {
+      res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
+    }
+
+      res.render("account/update", {
+        title: "Update Account",
+        nav,
+        accountData: res.locals.accountData,
+        errors: null,
+        message: req.flash("notice"),
+        success: req.flash("success")
+      })
+
+  } catch (error) {
+    req.flash("notice", "Error updating account. Please try again.")
+    
+  res.render("account/update", {
+    title: "Update Account",
+    nav,
+    accountData: res.locals.accountData,
+    errors: null,
+    message: req.flash("notice"),
+    success: req.flash("success")
+  })
+  }
+}
+
+/****************************************
+ *  Update account password
+ ****************************************/
+async function updateAccountPassword(req, res, next) {
+  const nav = await utilities.getNav()
+  const { account_id, account_password } = req.body
+
+  try {
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(account_password, 10)
+    await accountModel.updatePassword(account_id, hashedPassword)
+    req.flash("success", "Password updated successfully.")
+    res.render("account/update", {
+      title: "Update Account",
+      nav,
+      accountData: res.locals.accountData,
+      errors: null,
+      message: req.flash("notice"),
+      success: req.flash("success")
+  })
+  } catch (error) {
+    req.flash("notice", "Error updating password. Please try again.")
+    return res.render("account/update", {
+      title: "Update Account",
+      nav,
+      accountData: res.locals.accountData,
+      errors: null,
+      message: req.flash("notice"),
+      success: null
+    })
+  }
+}
+
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, accountLogout,  buildUpdateView,
+  updateAccountInfo,
+  updateAccountPassword} 

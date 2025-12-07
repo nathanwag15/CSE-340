@@ -359,3 +359,154 @@ noscript {
   }
 }
 
+
+/* Flash Messages */
+.flash-message, .flash-success {
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.flash-message {
+  background-color: #ffe6e6;
+  color: #b30000;
+}
+
+.flash-success {
+  background-color: #e6ffea;
+  color: #2e7d32;
+}
+
+/* Validation Errors */
+ul.notice {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  color: #b30000;
+}
+
+ul.notice li {
+  margin-bottom: 5px;
+}
+
+/* Fieldsets */
+form fieldset {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+  background-color: #fff;
+}
+
+form legend {
+  font-weight: bold;
+  padding: 0 10px;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+/* Form groups */
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels */
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Inputs */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+}
+
+/* Small helper text */
+.form-group small {
+  color: #555;
+  font-size: 0.85rem;
+  margin-top: 3px;
+}
+
+/* Submit buttons */
+.form-group input[type="submit"] {
+  padding: 12px 20px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.form-group input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    margin: 20px;
+    padding: 15px;
+  }
+
+  form fieldset {
+    padding: 15px;
+  }
+
+  .form-group input[type="submit"] {
+    width: 100%;
+  }
+}
+
+h1, h2, h3 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+p {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.flash-message {
+  background-color: #ffe6e6;
+  color: #b30000;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.flash-success {
+  background-color: #e6ffea;
+  color: #2e7d32;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
