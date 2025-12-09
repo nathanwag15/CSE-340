@@ -22,6 +22,9 @@ Util.getNav = async function (req, res, next) {
       "</a>"
     list += "</li>"
   })
+  if (this.checkLogin) {
+      list += '<li><a href="/favorites" title="favorites">Favorites</a></li>'
+    }
   list += "</ul>"
   return list
 }
@@ -33,10 +36,12 @@ Util.getNav = async function (req, res, next) {
 * Build the classification view HTML
 * ************************************ */
 Util.buildClassificationGrid = async function(data){
+  console.log(data)
+  let dataList = data.rows
   let grid
-  if(data.length > 0){
+  if(dataList.length > 0){
     grid = '<ul id="inv-display">'
-    data.forEach(vehicle => { 
+    dataList.forEach(vehicle => { 
       grid += '<li>'
       grid +=  '<a href="/inv/detail/'+ vehicle.inv_id 
       + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
@@ -62,6 +67,48 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+/* **************************************
+* Build the account view HTML
+* ************************************ */
+Util.buildFavoritesGrid = async function(data) {
+  let grid = ''
+  console.log(data.length)
+  if (data.length > 0) {
+    grid = '<ul id="inv-display">'
+    
+    for (const vehicle of data) {
+      // Await the details
+      console.log("vehicle.inv_id:", vehicle.inv_id)
+      item = await invModel.getDetailsByInventoryId(vehicle.inv_id)
+      console.log("item:", item)
+      
+
+      grid += '<li>'
+      grid += '<a href="/inv/detail/' + item.inv_id 
+            + '" title="View ' + item.inv_make + ' ' + item.inv_model + ' details">'
+            + '<img src="' + item.inv_thumbnail 
+            + '" alt="Image of ' + item.inv_make + ' ' + item.inv_model + ' on CSE Motors" />'
+            + '</a>'
+      grid += '<div class="namePrice">'
+      grid += '<hr />'
+      grid += '<h2>'
+      grid += '<a href="/inv/detail/' + item.inv_id + '" title="View ' + item.inv_make + ' ' + item.inv_model + ' details">' 
+            + item.inv_make + ' ' + item.inv_model + '</a>'
+      grid += '</h2>'
+      grid += '<span>$' + new Intl.NumberFormat('en-US').format(item.inv_price) + '</span>'
+      grid += '</div>'
+      grid += '</li>'
+    }
+
+    grid += '</ul>'
+  } else {
+    grid = '<p class="notice">Sorry, no favorite vehicles could be found.</p>'
+  }
+
+  return grid
+}
+
+
 /* ************************************
  * Build the Details view HTML
  * ********************************** */
@@ -80,6 +127,7 @@ Util.buildDetailsGrid = async function(data){
         <li><strong>Miles:</strong> ${data.inv_miles}</li>
         <li><strong>Color:</strong> ${data.inv_color}</li>
         <li><strong>Description:</strong> ${data.inv_description}</li>
+        
       </ul>
     </div>
   `
@@ -105,7 +153,7 @@ Util.checkJWTToken = (req, res, next) => {
    process.env.ACCESS_TOKEN_SECRET,
    function (err, accountData) {
     if (err) {
-     req.flash("Please log in")
+     req.flash("notice", "Please log in")
      res.clearCookie("jwt")
      return res.redirect("/account/login")
     }

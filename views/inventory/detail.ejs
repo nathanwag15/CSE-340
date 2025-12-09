@@ -3,4 +3,21 @@
 
 <div>
   <%- grid %>
+
+
+    <% if (locals.accountData) { %>
+      <% if (favorite) { %>
+        <!-- Vehicle is already a favorite, show Remove button -->
+        <form action="/favorites/remove" method="POST">
+          <input type="hidden" name="inv_id" value="<%= item.inv_id %>">
+          <button type="submit">Remove from Favorites</button>
+        </form>
+      <% } else { %>
+        <!-- Vehicle is not a favorite, show Add button -->
+        <form action="/favorites/add" method="POST">
+          <input type="hidden" name="inv_id" value="<%= item.inv_id %>">
+          <button type="submit">Add to Favorites</button>
+        </form>
+      <% } %>
+    <% } %>
 </div>

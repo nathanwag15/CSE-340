@@ -288,7 +288,7 @@ validate.checkInventoryData = async (req, res, next) => {
     const classifications = result.rows
 
     // Re-render the add-item form with errors and previous data
-    return res.render("inventory/edit-inventory", {
+    return res.render("inventory/add-item", {
       title: "Edit Item",
       nav,
       classifications, // or fetch again if not stored
